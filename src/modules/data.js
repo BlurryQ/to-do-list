@@ -1,13 +1,13 @@
 export default function Data() {
-    const toDoList = []
 
-    const add = (listObj) => {
-        toDoList.push(listObj)
-        console.table(toDoList)
+    const add = (toDoLists, listObj, date) => {
+        listObj.created = date
+        toDoLists.push(listObj)
+        localStorage.setItem("toDoLists", JSON.stringify(toDoLists));
     }
 
     const get = () => {
-        return toDoList
+        return JSON.parse(localStorage.getItem("toDoLists"));
     }
 
     return { add, get }

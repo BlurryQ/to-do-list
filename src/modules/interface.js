@@ -70,32 +70,6 @@ export default function Interface () {
         form.appendChild(submit)
         return form
     }
-    const toggleForm = () => {
-        const CONTENT = document.getElementById("content")
-        const FORM_BUTTON = document.getElementById("form-button")
-
-        let showForm = false;
-
-        FORM_BUTTON.addEventListener("click", () => {
-            showForm = !showForm
-            if(showForm) { 
-                CONTENT.appendChild(newForm()) 
-                const submitButton = document.getElementById("submit")
-                submitButton.addEventListener("click", () => {
-                    debug("clicked submit")
-                    //do something with data
-
-                    //clear date fields
-
-                    //close form
-                    removeChildContent(CONTENT)
-                })
-            }
-            else { 
-                removeChildContent(CONTENT)
-            }
-        })
-    }
 
     const getToDoListData = () => {
         const PROJECT = document.getElementById("project")
@@ -116,6 +90,10 @@ export default function Interface () {
             parent.removeChild(parent.firstChild)
         }
     }
+
+    const displayLists = (lists) => {
+        console.table(lists);
+    }
     
-    return { newForm, toggleForm, getToDoListData, removeChildContent }
+    return { newForm, getToDoListData, removeChildContent, displayLists }
 }

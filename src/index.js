@@ -4,16 +4,6 @@ import style from "./style.css"
 import DATA from "./modules/data.js"
 import INTERFACE from "./modules/interface.js"
 
-/* ---------- ---------- DEBUGGING ---------- ---------- */
-
-const debugging = true;
-
-function debug(message) {
-    if(debugging) {
-        console.log(message);
-    }
-}
-
 /* ---------- ---------- ---------- ---------- ---------- */
 const Mediator = () => {
 
@@ -22,6 +12,11 @@ const Mediator = () => {
     const CONTENT = document.getElementById("content")
     const FORM_BUTTON = document.getElementById("form-button")
 
+    let toDoLists = []
+    const storedToDoLists = Data.get()
+    if(storedToDoLists) toDoLists = storedToDoLists
+
+    Interface.displayLists(Data.get());
     let showForm = false;
 
     FORM_BUTTON.addEventListener("click", () => {
@@ -30,15 +25,10 @@ const Mediator = () => {
             CONTENT.appendChild(Interface.newForm()) 
             const submitButton = document.getElementById("submit")
             submitButton.addEventListener("click", () => {
-                debug("clicked submit")
                 showForm = !showForm
-                //do something with data
-
-                //clear date fields
-                Data.add(Interface.getToDoListData())
-                debug(Data.get())
-                //close form
+                Data.add(toDoLists, Interface.getToDoListData(), Date())
                 Interface.removeChildContent(CONTENT)
+                Interface.displayLists(Data.get());
             })
         }
         else { 
