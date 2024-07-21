@@ -2,72 +2,95 @@
 
 export default function Interface () {
 
-    const newForm = () => {
+    const toDoList = (_toDoList, _listIndex) => {
         const form = document.createElement("form")
-        const label1 = document.createElement("label")
-        const label2 = document.createElement("label")
-        const label3 = document.createElement("label")
-        const label4 = document.createElement("label")
-        const input1 = document.createElement("input")
-        const input2 = document.createElement("input")
-        const input3 = document.createElement("input")
-        const input4 = document.createElement("input")
-        const br1 = document.createElement("br")
-        const br2 = document.createElement("br")
-        const br3 = document.createElement("br")
-        const br4 = document.createElement("br")
-        const br5 = document.createElement("br")
-        const br6 = document.createElement("br")
-        const br7 = document.createElement("br")
-        const br8 = document.createElement("br")
-        const submit = document.createElement("input")
+        const projectLabel = document.createElement("label")
+        const titleLabel = document.createElement("label")
+        const toDoLabel = document.createElement("label")
+        const dueDateLabel = document.createElement("label")
+        const projectInput = document.createElement("input")
+        const titleInput = document.createElement("input")
+        const toDoInput = document.createElement("input")
+        const dueDateInput = document.createElement("input")
+        const projectBR = document.createElement("br")
+        const titleBR = document.createElement("br")
+        const toDoBR = document.createElement("br")
+        const dueDateBR = document.createElement("br")
+        const save = document.createElement("button")
     
-        label1.for = "project"
-        label1.textContent = "Project Name:"
-        input1.type = "text"
-        input1.name = "project"
-        input1.placeholder = "Enter project name"
+        projectLabel.for = "project"
+        projectLabel.textContent = "Project Name:"
+        projectInput.type = "text"
+        projectInput.name = "project"
+        projectInput.placeholder = "Enter project name"
     
-        label2.for = "title"
-        label2.textContent = "Title:"
-        input2.type = "text"
-        input2.name = "title"
-        input2.placeholder = "Enter title"
+        titleLabel.for = "title"
+        titleLabel.textContent = "Title:"
+        titleInput.type = "text"
+        titleInput.name = "title"
+        titleInput.placeholder = "Enter title"
     
-        label3.for = "content"
-        label3.textContent = "To Do:"
-        input3.type = "text"
-        input3.name = "content"
-        input3.placeholder = "Enter note here"
+        toDoLabel.for = "to-do"
+        toDoLabel.textContent = "To Do:"
+        toDoInput.type = "text"
+        toDoInput.name = "to-do"
+        toDoInput.placeholder = "Enter note here"
     
-        label4.for = "dueDate"
-        label4.textContent = "Date due:"
-        input4.type = "date"
-        input4.name = "dueDate"
-        input4.placeholder = "Enter due date"
+        dueDateLabel.for = "dueDate"
+        dueDateLabel.textContent = "Date due:"
+        dueDateInput.type = "date"
+        dueDateInput.name = "dueDate"
+        dueDateInput.placeholder = "Enter due date"
     
-        submit.type = "button"
-        submit.value = "submit"
+        save.textContent = "Save"
+        save.type = "button"
+        save.value = "save"
     
-        input1.setAttribute("id", "project")
-        input2.setAttribute("id", "title")
-        input3.setAttribute("id", "to-do")
-        input4.setAttribute("id", "due-date")
-        submit.setAttribute("id", "submit")
+        form.setAttribute("id", "new-form")
+        projectInput.setAttribute("id", "project")
+        titleInput.setAttribute("id", "title")
+        toDoInput.setAttribute("id", "to-do")
+        dueDateInput.setAttribute("id", "due-date")
+        save.setAttribute("id", "save")
     
-        form.appendChild(label1)
-        form.appendChild(input1)
-        form.appendChild(br1)
-        form.appendChild(label2)
-        form.appendChild(input2)
-        form.appendChild(br2)
-        form.appendChild(label3)
-        form.appendChild(input3)
-        form.appendChild(br3)
-        form.appendChild(label4)
-        form.appendChild(input4)
-        form.appendChild(br4)
-        form.appendChild(submit)
+        form.appendChild(projectLabel)
+        form.appendChild(projectInput)
+        form.appendChild(projectBR)
+        form.appendChild(titleBR)
+        form.appendChild(titleInput)
+        form.appendChild(titleBR)
+        form.appendChild(toDoLabel)
+        form.appendChild(toDoInput)
+        form.appendChild(toDoBR)
+        form.appendChild(dueDateLabel)
+        form.appendChild(dueDateInput)
+        form.appendChild(dueDateBR)
+
+        if(_toDoList) {
+            projectInput.value = _toDoList.project
+            titleInput.value = _toDoList.title
+            toDoInput.value = _toDoList["to-do"]
+            dueDateInput.value = _toDoList["due-date"]
+
+            const createdDateLabel = document.createElement("label")
+            const createdDateSpan = document.createElement("span")
+            const createdDateBR = document.createElement("br")
+
+            createdDateLabel.textContent = "Created Date:"
+            createdDateLabel.for = "created-date"
+            createdDateSpan.textContent = _toDoList.created
+
+            createdDateSpan.classList.add("createdDate")
+
+            save.classList.add(_listIndex)
+            form.setAttribute("id", _listIndex)
+            
+            form.appendChild(createdDateLabel)
+            form.appendChild(createdDateSpan)
+            form.appendChild(createdDateBR)
+        }
+
+        form.appendChild(save)
         return form
     }
 
@@ -85,15 +108,23 @@ export default function Interface () {
         }
     }
 
-    const removeChildContent = (parent) => {
-        while(parent.firstChild) {
-            parent.removeChild(parent.firstChild)
+    const removeChildContent = (...parents) => {
+        for(const parent of parents) {
+            while(parent.firstChild) {
+                parent.removeChild(parent.firstChild)
+            }
         }
     }
 
-    const displayLists = (lists) => {
-        console.table(lists);
+    const displayLists = (toDoLists, location) => {
+        let _listIndex = 0
+        for(const _list of toDoLists) {
+
+            const list = toDoList(_list, _listIndex)
+            location.appendChild(list)
+            _listIndex += 1
+        }
     }
     
-    return { newForm, getToDoListData, removeChildContent, displayLists }
+    return { toDoList, getToDoListData, removeChildContent, displayLists }
 }
