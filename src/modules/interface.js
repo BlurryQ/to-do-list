@@ -44,14 +44,13 @@ export default function Interface () {
     
         save.textContent = "Save"
         save.type = "button"
-        save.value = "save"
     
         form.setAttribute("id", "new-form")
-        projectInput.setAttribute("id", "project")
-        titleInput.setAttribute("id", "title")
-        toDoInput.setAttribute("id", "to-do")
-        dueDateInput.setAttribute("id", "due-date")
-        save.setAttribute("id", "save")
+        projectInput.setAttribute("name", "project")
+        titleInput.setAttribute("name", "title")
+        toDoInput.setAttribute("name", "to-do")
+        dueDateInput.setAttribute("name", "due-date")
+        save.setAttribute("name", "save")
     
         form.appendChild(projectLabel)
         form.appendChild(projectInput)
@@ -82,8 +81,8 @@ export default function Interface () {
 
             createdDateSpan.classList.add("createdDate")
 
-            save.classList.add(_listIndex)
-            form.setAttribute("id", _listIndex)
+            /* save.classList.add(_listIndex) */
+            form.setAttribute("id", "index-" + _listIndex)
             
             form.appendChild(createdDateLabel)
             form.appendChild(createdDateSpan)
@@ -94,17 +93,17 @@ export default function Interface () {
         return form
     }
 
-    const getToDoListData = () => {
-        const PROJECT = document.getElementById("project")
-        const TITLE = document.getElementById("title")
-        const TO_DO = document.getElementById("to-do")
-        const DUE_DATE= document.getElementById("due-date")
+    const showNewForm = () => {
+        const NEW_FORM_LOCATION = document.getElementById("new-form-here")
+        NEW_FORM_LOCATION.appendChild(toDoList()) 
+    }
 
+    const getToDoListData = (HTMLForm) => {
         return {
-            project: PROJECT.value,
-            title: TITLE.value,
-            "to-do": TO_DO.value,
-            "due-date": DUE_DATE.value
+            project: HTMLForm["project"].value,
+            title: HTMLForm["title"].value,
+            "to-do": HTMLForm["to-do"].value,
+            "due-date": HTMLForm["due-date"].value
         }
     }
 
@@ -126,5 +125,7 @@ export default function Interface () {
         }
     }
     
-    return { toDoList, getToDoListData, removeChildContent, displayLists }
+    return { toDoList, showNewForm, getToDoListData, removeChildContent, displayLists }
 }
+
+//toDoList === _toDoList?

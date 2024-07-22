@@ -10,8 +10,8 @@ const Mediator = () => {
     const Interface = INTERFACE()
     const Data = DATA()
     const getDate = GET_DATE()
-    const TOGGLE_NEW_FORM = document.getElementById("toggle-new-form")
-    const NEW_FORM = document.getElementById("new-form-here")
+    
+    
     const TO_DO = document.getElementById("to-do")
 
     let toDoLists = []
@@ -19,43 +19,88 @@ const Mediator = () => {
     if(storedToDoLists) toDoLists = storedToDoLists
 
     Interface.displayLists(Data.get(), TO_DO);
-    let showForm = false;
+    let showForm = true;
 
-    TOGGLE_NEW_FORM.addEventListener("click", () => {
-        showForm = !showForm
-        if(showForm) { 
-            NEW_FORM.appendChild(Interface.toDoList()) 
-            const SAVE = document.getElementById("save")
-            SAVE.addEventListener("click", () => {
-                showForm = !showForm
-                Data.add(toDoLists, Interface.getToDoListData(), getDate.formatted())
-                Interface.removeChildContent(NEW_FORM, TO_DO)
-                Interface.displayLists(Data.get(), TO_DO);
-            })
-        }
-        else { 
-            Interface.removeChildContent(NEW_FORM)
-        }
-    })
+    //showForm = newfunc()
 
     /* insert function for returning id of lits to update */
-    const UPDATE = document.querySelectorAll("button")
+/*     const UPDATE = document.querySelectorAll("form")
     UPDATE.forEach(list => {
-        console.log("53", list.className);
-
-        if(list.value === "save")
-        list.addEventListener("click", () => {
-
-            console.log("AAAAAAAAAAAAAAH");
+        
+            list["save"].addEventListener("click", () => {
+        
+        console.log("48", list.className);
+        console.log("AAAAAAAAAAAAAAH");
         //UPDATE FUNCTION HERE
-        //const updatedData = Interface.getToDoListData()
-
+        //const updatedData = Interface.getToDoListData(>index<)
+        
         //END HERE
 
         Interface.removeChildContent(TO_DO)
         Interface.displayLists(Data.get(), TO_DO);
+        _formListener()
     })
-})
+}) */
+
+    const _formListener = (showForm) => {
+        const FORMS = document.querySelectorAll("form")
+        FORMS.forEach(form => {
+            form["save"].addEventListener("click", () => {
+                console.log("---", form.id);
+                if(form.id === "new-form") {
+                    if(showForm) {
+                        console.log("NEWFORMHERE");
+                        !showForm
+                        const NEW_FORM_LOCATION = document.getElementById("new-form")
+                        Interface.removeChildContent(NEW_FORM_LOCATION, TO_DO)
+                        Interface.displayLists(Data.get(), TO_DO);
+                        console.log("WORKING");
+                        return !showForm
+                    }
+                } else {
+                //code here...
+                console.log("48", form.className);
+                console.log("AAAAAAAAAAAAAAH");
+                //...to here
+                }
+            })
+        })
+    }
+
+    showForm = _formListener(showForm)
+
+    const toggleNewForm = (showForm) => {
+        if(showForm) { 
+                Interface.showNewForm
+                _formListener()
+
+
+/*                 const NEW_FORM = document.getElementById("new-form")
+                NEW_FORM["save"].addEventListener("click", () => {
+                    showForm = !showForm
+                    //Data.add(toDoLists, Interface.getToDoListData(NEW_FORM), getDate.formatted())
+                    Interface.removeChildContent(NEW_FORM, TO_DO)
+                    Interface.displayLists(Data.get(), TO_DO);
+                    console.log("WORKING");
+
+                }) */
+            }
+            else { 
+                Interface.removeChildContent(NEW_FORM_LOCATION)
+            }
+        return !showForm
+    }
+
+
+    const TOGGLE_NEW_FORM = document.getElementById("toggle-new-form")
+    const NEW_FORM_LOCATION = document.getElementById("new-form-here")
+    TOGGLE_NEW_FORM.addEventListener("click", () => {
+        Interface.showNewForm()
+        console.log("1:", showForm);
+        showForm = toggleNewForm(showForm)
+        console.log("2:", showForm);
+    })
+
 }
 
 Mediator()
