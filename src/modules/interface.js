@@ -125,7 +125,7 @@ export default function Interface () {
         }
     }
     
-    return { toDoList, showNewForm, getToDoListData, removeChildContent, displayLists }
+    return { toDoList, /* showNewForm ,*/ getToDoListData, removeChildContent, displayLists }
 }
 
 //toDoList === _toDoList?

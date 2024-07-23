@@ -51,8 +51,9 @@ const Mediator = () => {
                     if(showForm) {
                         console.log("NEWFORMHERE");
                         !showForm
-                        const NEW_FORM_LOCATION = document.getElementById("new-form")
-                        Interface.removeChildContent(NEW_FORM_LOCATION, TO_DO)
+                        //Data.add(toDoLists, Interface.getToDoListData(NEW_FORM), getDate.formatted())
+                        NEW_FORM_LOCATION.style.cssText = "display: none;"
+                        Interface.removeChildContent(TO_DO)
                         Interface.displayLists(Data.get(), TO_DO);
                         console.log("WORKING");
                         return !showForm
@@ -67,15 +68,18 @@ const Mediator = () => {
         })
     }
 
+    const NEW_FORM_LOCATION = document.getElementById("new-form-here")
+    NEW_FORM_LOCATION.appendChild(Interface.toDoList()) 
+
     showForm = _formListener(showForm)
 
-    const toggleNewForm = (showForm) => {
+/*     const toggleNewForm = (showForm) => {
         if(showForm) { 
                 Interface.showNewForm
                 _formListener()
 
 
-/*                 const NEW_FORM = document.getElementById("new-form")
+                const NEW_FORM = document.getElementById("new-form")
                 NEW_FORM["save"].addEventListener("click", () => {
                     showForm = !showForm
                     //Data.add(toDoLists, Interface.getToDoListData(NEW_FORM), getDate.formatted())
@@ -83,23 +87,21 @@ const Mediator = () => {
                     Interface.displayLists(Data.get(), TO_DO);
                     console.log("WORKING");
 
-                }) */
+                })
             }
             else { 
                 Interface.removeChildContent(NEW_FORM_LOCATION)
             }
         return !showForm
-    }
+    } */
 
 
     const TOGGLE_NEW_FORM = document.getElementById("toggle-new-form")
-    const NEW_FORM_LOCATION = document.getElementById("new-form-here")
+    
     TOGGLE_NEW_FORM.addEventListener("click", () => {
-        Interface.showNewForm()
-        console.log("1:", showForm);
-        showForm = toggleNewForm(showForm)
-        console.log("2:", showForm);
-    })
+        NEW_FORM_LOCATION.style.cssText = NEW_FORM_LOCATION.style.cssText === "display: block;" ? "display: none;" : "display: block;"
+        }
+    )
 
 }
 
