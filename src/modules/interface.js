@@ -92,12 +92,7 @@ export default function Interface () {
         form.appendChild(save)
         return form
     }
-
-    const showNewForm = () => {
-        const NEW_FORM_LOCATION = document.getElementById("new-form-here")
-        NEW_FORM_LOCATION.appendChild(toDoList()) 
-    }
-
+    
     const getToDoListData = (HTMLForm) => {
         return {
             project: HTMLForm["project"].value,
@@ -106,7 +101,14 @@ export default function Interface () {
             "due-date": HTMLForm["due-date"].value
         }
     }
-
+    
+        const clearFormValues = (HTMLForm) => {
+            HTMLForm["project"].value = ""
+            HTMLForm["title"].value = ""
+            HTMLForm["to-do"].value = ""
+            HTMLForm["due-date"].value = ""
+        }
+    
     const removeChildContent = (...parents) => {
         for(const parent of parents) {
             while(parent.firstChild) {
@@ -116,6 +118,7 @@ export default function Interface () {
     }
 
     const displayLists = (toDoLists, location) => {
+        if(toDoLists === null) return
         let _listIndex = 0
         for(const _list of toDoLists) {
 
@@ -125,7 +128,7 @@ export default function Interface () {
         }
     }
     
-    return { toDoList, /* showNewForm ,*/ getToDoListData, removeChildContent, displayLists }
+    return { toDoList, getToDoListData, clearFormValues, removeChildContent, displayLists }
 }
 
 //toDoList === _toDoList?

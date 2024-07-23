@@ -1,6 +1,7 @@
 export default function Data() {
 
-    const add = (toDoLists, list, date) => {
+    const add = (list, date) => {
+        const toDoLists = get()
         list.created = date
         toDoLists.push(list)
         localStorage.setItem("toDoLists", JSON.stringify(toDoLists));
@@ -10,8 +11,12 @@ export default function Data() {
         return JSON.parse(localStorage.getItem("toDoLists"));
     }
 
-    const update = (toDoLists, list, index) => {
+    const update = (list, index) => {
+        const toDoLists = get()
         console.log("14:", "UPDATE", toDoLists, list, index);
+        toDoLists.splice(index, 1, list)
+        localStorage.setItem("toDoLists", JSON.stringify(toDoLists))
+        console.log(toDoLists);
     }
 
     return { add, get, update }
