@@ -8,7 +8,8 @@ export default function Data() {
     }
 
     const get = () => {
-        return JSON.parse(localStorage.getItem("toDoLists"));
+        const toDoLists = JSON.parse(localStorage.getItem("toDoLists"));
+        return toDoLists ? toDoLists : []
     }
 
     const update = (list, index) => {

@@ -13,12 +13,7 @@ const Mediator = () => {
     const TO_DO = document.getElementById("to-do")
     const NEW_FORM_LOCATION = document.getElementById("new-form-here")
 
-    let toDoLists = []
-    const storedToDoLists = Data.get()
-    if(storedToDoLists) toDoLists = storedToDoLists
-
     Interface.displayLists(Data.get(), TO_DO);
-    let showForm = true;
 
     NEW_FORM_LOCATION.appendChild(Interface.toDoList()) 
     

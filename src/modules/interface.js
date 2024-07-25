@@ -55,7 +55,7 @@ export default function Interface () {
         form.appendChild(projectLabel)
         form.appendChild(projectInput)
         form.appendChild(projectBR)
-        form.appendChild(titleBR)
+        form.appendChild(titleLabel)
         form.appendChild(titleInput)
         form.appendChild(titleBR)
         form.appendChild(toDoLabel)
@@ -81,7 +81,6 @@ export default function Interface () {
 
             createdDateSpan.classList.add("createdDate")
 
-            /* save.classList.add(_listIndex) */
             form.setAttribute("id", "index-" + _listIndex)
             
             form.appendChild(createdDateLabel)
