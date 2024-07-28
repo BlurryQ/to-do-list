@@ -13,17 +13,9 @@ const Mediator = () => {
     const TO_DO = document.getElementById("to-do")
     Interface.displayLists(Data.get(), TO_DO);
     
-    const NEW_FORM_LOCATION = document.getElementById("new-form-here")
-    TO_DO.appendChild(Interface.toDoList()) 
-    const NEW_FORM = document.getElementById("new-form")
-
-    const TOGGLE_NEW_FORM = document.getElementById("toggle-new-form")
-    TOGGLE_NEW_FORM.addEventListener("click", () => {
-        NEW_FORM.style.cssText = NEW_FORM.style.cssText === "display: flex;" ? "display: none;" : "display: flex;"
-        }
-    )
     
     const _formListener = () => {
+        _toggleNewFormListener()
         const FORMS = document.querySelectorAll("form")
         FORMS.forEach(form => {
             form["save"].addEventListener("click", () => {
@@ -31,7 +23,7 @@ const Mediator = () => {
                     const newForm = document.getElementById("new-form")
                     Data.add(Interface.getToDoListData(newForm), getDate.formatted())
                     Interface.clearFormValues(newForm)
-                    NEW_FORM.style.cssText = "display: none;"
+                    newForm.style.cssText = "display: none;"
                 } else {
                     const updatedForm = document.getElementById(form.id)
                     const formIndex = _getIndexFromID(form.id)
@@ -43,6 +35,17 @@ const Mediator = () => {
             })
         })
     }
+    
+    const _toggleNewFormListener = () => {
+        TO_DO.appendChild(Interface.toDoList()) 
+        const NEW_FORM = document.getElementById("new-form")
+        NEW_FORM.style.cssText = "display: none;"
+        const TOGGLE_NEW_FORM = document.getElementById("toggle-new-form")
+        TOGGLE_NEW_FORM.addEventListener("click", () => {
+            NEW_FORM.style.cssText = NEW_FORM.style.cssText === "display: flex;" ? "display: none;" : "display: flex;"
+            }
+        )
+    }
 
     const _getIndexFromID = (formID) => {
         //formID = `index-${array index}`
@@ -51,6 +54,7 @@ const Mediator = () => {
     }
 
     _formListener()
+
 
 }
 

@@ -62,9 +62,14 @@ table {
     margin-bottom: 2rem;
 }
 
-#new-form {
-    display: none;
+#toggle-new-form {
+    justify-self: center;
+    align-self: center;
 }
+
+/* #new-form {
+    display: none;
+} */
 
 .pegboard {
     display: grid;
@@ -105,6 +110,7 @@ form button {
 }
 
 #to-do {
+    min-height: 30vh;
     margin-left: 2%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);

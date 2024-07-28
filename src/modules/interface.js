@@ -91,6 +91,13 @@ export default function Interface () {
         form.appendChild(save)
         return form
     }
+
+    const _addListToggle = () => {
+        const toggle = document.createElement("button")
+        toggle.setAttribute("id", "toggle-new-form")
+        toggle.textContent = "+"
+        return toggle
+    }
     
     const getToDoListData = (HTMLForm) => {
         return {
@@ -117,17 +124,16 @@ export default function Interface () {
     }
 
     const displayLists = (toDoLists, location) => {
-        if(toDoLists === null) return
+        if(toDoLists) {
         let _listIndex = 0
         for(const _list of toDoLists) {
 
             const list = toDoList(_list, _listIndex)
             location.appendChild(list)
             _listIndex += 1
-        }
+        }}
+        location.appendChild(_addListToggle())
     }
     
     return { toDoList, getToDoListData, clearFormValues, removeChildContent, displayLists }
 }
-
-//toDoList === _toDoList?
