@@ -62,14 +62,16 @@ table {
     margin-bottom: 2rem;
 }
 
+[name="remove"] {
+    background: rgb(220, 20, 20);
+    color: white;
+    font-weight: bold;
+}
+
 #toggle-new-form {
     justify-self: center;
     align-self: center;
 }
-
-/* #new-form {
-    display: none;
-} */
 
 .pegboard {
     display: grid;

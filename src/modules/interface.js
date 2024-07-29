@@ -17,6 +17,7 @@ export default function Interface () {
         const toDoBR = document.createElement("br")
         const dueDateBR = document.createElement("br")
         const save = document.createElement("button")
+        const remove = document.createElement("button")
     
         projectLabel.for = "project"
         projectLabel.textContent = "Project Name:"
@@ -43,7 +44,10 @@ export default function Interface () {
         dueDateInput.placeholder = "Enter due date"
     
         save.textContent = "Save"
+        remove.textContent = "Delete"
+
         save.type = "button"
+        remove.type = "button"
     
         form.setAttribute("id", "new-form")
         projectInput.setAttribute("name", "project")
@@ -51,6 +55,7 @@ export default function Interface () {
         toDoInput.setAttribute("name", "to-do")
         dueDateInput.setAttribute("name", "due-date")
         save.setAttribute("name", "save")
+        remove.setAttribute("name", "remove")
     
         form.appendChild(projectLabel)
         form.appendChild(projectInput)
@@ -89,6 +94,8 @@ export default function Interface () {
         }
 
         form.appendChild(save)
+        form.appendChild(remove)
+        
         return form
     }
 
