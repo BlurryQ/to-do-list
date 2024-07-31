@@ -2,7 +2,20 @@
 
 export default function Interface () {
 
-    const toDoList = (_toDoList, _listIndex) => {
+    const displayProjects = (projects, CURRENT_PROJECTS) => {
+        for(const project of projects) {
+            const projectButton = document.createElement("button")
+            projectButton.textContent = project
+            CURRENT_PROJECTS.appendChild(projectButton)
+        }
+        return CURRENT_PROJECTS
+    }
+
+    const displayProjectLists = (projectToDisplay) => {
+
+    }
+
+    const toDoList = (toDoList, listIndex) => {
         const form = document.createElement("form")
         const projectLabel = document.createElement("label")
         const titleLabel = document.createElement("label")
@@ -70,11 +83,11 @@ export default function Interface () {
         form.appendChild(dueDateInput)
         form.appendChild(dueDateBR)
 
-        if(_toDoList) {
-            projectInput.value = _toDoList.project
-            titleInput.value = _toDoList.title
-            toDoInput.value = _toDoList["to-do"]
-            dueDateInput.value = _toDoList["due-date"]
+        if(toDoList) {
+            projectInput.value = toDoList.project
+            titleInput.value = toDoList.title
+            toDoInput.value = toDoList["to-do"]
+            dueDateInput.value = toDoList["due-date"]
 
             const createdDateLabel = document.createElement("label")
             const createdDateSpan = document.createElement("span")
@@ -82,11 +95,11 @@ export default function Interface () {
 
             createdDateLabel.textContent = "Created Date:"
             createdDateLabel.for = "created-date"
-            createdDateSpan.textContent = _toDoList.created
+            createdDateSpan.textContent = toDoList.created
 
             createdDateSpan.classList.add("createdDate")
 
-            form.setAttribute("id", "index-" + _listIndex)
+            form.setAttribute("id", "index-" + listIndex)
             
             form.appendChild(createdDateLabel)
             form.appendChild(createdDateSpan)
@@ -132,15 +145,15 @@ export default function Interface () {
 
     const displayLists = (toDoLists, location) => {
         if(toDoLists) {
-        let _listIndex = 0
+        let listIndex = 0
         for(const _list of toDoLists) {
 
-            const list = toDoList(_list, _listIndex)
+            const list = toDoList(_list, listIndex)
             location.appendChild(list)
-            _listIndex += 1
+            listIndex += 1
         }}
         location.appendChild(_addListToggle())
     }
     
-    return { toDoList, getToDoListData, clearFormValues, removeChildContent, displayLists }
+    return { displayProjects, toDoList, getToDoListData, clearFormValues, removeChildContent, displayLists }
 }
