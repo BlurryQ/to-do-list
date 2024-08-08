@@ -47,9 +47,33 @@ const controller = () => {
     return Data.get().filter((list) => list.project === projectName);
   };
 
+  const toDoListValidation = (form) => {
+    const toDoListInput = Interface.getToDoListData(form);
+    if (!toDoListInput.project) {
+      console.log("no project");
+      return { error: "Invalid project entry" };
+    }
+    if (!toDoListInput.title) {
+      console.log("no title");
+      return { error: "Invalid title entry" };
+    }
+    if (!toDoListInput["to-do"]) {
+      console.log("no content");
+      return { error: "Invalid content entry" };
+    }
+    return toDoListInput;
+  };
+
   const addToDoList = () => {
     const newForm = document.getElementById("new-form");
-    Data.add(Interface.getToDoListData(newForm), getDate.formatted());
+    const validToDoListInput = toDoListValidation(newForm);
+    if (validToDoListInput.error) {
+      console.log("we need an error function");
+      return;
+    }
+    //display error
+
+    Data.add(validToDoListInput, getDate.formatted());
     Interface.clearFormValues(newForm);
     newForm.style.cssText = "display: none;";
   };
@@ -57,7 +81,14 @@ const controller = () => {
   const updateToDoList = (formID) => {
     const updatedForm = document.getElementById(formID);
     const formIndex = getIndexFromID(formID);
-    Data.update(Interface.getToDoListData(updatedForm), formIndex);
+    const validToDoListInput = toDoListValidation(updatedForm);
+    if (validToDoListInput.error) {
+      console.log("we need an error function");
+      return;
+    }
+    //display error
+
+    Data.update(validToDoListInput, formIndex);
   };
 
   const removeToDoList = (formID) => {
@@ -115,4 +146,14 @@ const controller = () => {
 
 controller();
 
-//add empty form error
+/* 
+
+error function
+
+top bar for sort and light/dark mode
+
+  sort by due date, created date or reverse creation date
+
+checklist or string
+
+*/

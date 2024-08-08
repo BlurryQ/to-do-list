@@ -1,5 +1,3 @@
-/* import newForm from "./functions/newForm.js" */
-
 export default function Interface() {
   const displayProjects = (projects, CURRENT_PROJECTS) => {
     for (const project of projects) {
@@ -11,7 +9,12 @@ export default function Interface() {
     return CURRENT_PROJECTS;
   };
 
-  const displayProjectLists = (projectToDisplay) => {};
+  const setToDoListData = (HTMLForm, data) => {
+    /*     HTMLForm["project"].value = data.project,
+    HTMLForm["title"].value = data.title,
+    HTMLForm["to-do"].value = data["to-do"],
+    HTMLForm["due-date"].value = data["due-date"], */
+  };
 
   const toDoList = (toDoList, listIndex) => {
     const form = document.createElement("form");
