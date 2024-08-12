@@ -9,13 +9,6 @@ export default function Interface() {
     return CURRENT_PROJECTS;
   };
 
-  const setToDoListData = (HTMLForm, data) => {
-    /*     HTMLForm["project"].value = data.project,
-    HTMLForm["title"].value = data.title,
-    HTMLForm["to-do"].value = data["to-do"],
-    HTMLForm["due-date"].value = data["due-date"], */
-  };
-
   const toDoList = (toDoList, listIndex) => {
     const form = document.createElement("form");
     const projectLabel = document.createElement("label");
@@ -129,13 +122,6 @@ export default function Interface() {
     };
   };
 
-  const clearFormValues = (HTMLForm) => {
-    HTMLForm["project"].value = "";
-    HTMLForm["title"].value = "";
-    HTMLForm["to-do"].value = "";
-    HTMLForm["due-date"].value = "";
-  };
-
   const removeChildContent = (...parents) => {
     for (const parent of parents) {
       while (parent.firstChild) {
@@ -160,7 +146,6 @@ export default function Interface() {
     displayProjects,
     toDoList,
     getToDoListData,
-    clearFormValues,
     removeChildContent,
     displayLists,
   };

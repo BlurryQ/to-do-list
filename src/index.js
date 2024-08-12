@@ -18,18 +18,21 @@ const controller = () => {
 
   const createProjectsSidebar = (removeChildContent) => {
     if (removeChildContent) Interface.removeChildContent(CURRENT_PROJECTS_DOM);
-    const projects = projectsToDisplay();
-    Interface.displayProjects(projects, CURRENT_PROJECTS_DOM);
+    Interface.displayProjects(projectsToDisplay(), CURRENT_PROJECTS_DOM);
 
     const projectButtons = document.querySelectorAll('[name="project"]');
     projectButtons.forEach((project) => {
       project.addEventListener("click", () => {
         Interface.removeChildContent(TO_DO_DOM);
-
-        const projectLists = getProjectLists(project.textContent);
-        Interface.displayLists(projectLists, TO_DO_DOM);
+        const projectName = project.textContent;
+        const thisProjectsLists = getProjectLists(projectName);
+        Interface.displayLists(thisProjectsLists, TO_DO_DOM);
       });
     });
+  };
+
+  const getProjectLists = (projectName) => {
+    return Data.get().filter((list) => projectName === list.project);
   };
 
   const projectsToDisplay = () => {
@@ -43,52 +46,39 @@ const controller = () => {
     return allProjects;
   };
 
-  const getProjectLists = (projectName) => {
-    return Data.get().filter((list) => list.project === projectName);
+  const validateToDoListInput = (form) => {
+    const listData = Interface.getToDoListData(form);
+    if (listData.project && listData.title && listData["to-do"])
+      return listData;
+
+    //create error function, passing field to error
+    if (!listData.project) {
+      form["project"].placeholder = "ENTER A VALID PROJECT HERE";
+      form["project"].style.cssText = "border: 2px solid red;";
+    }
+
+    if (!listData.title) {
+      form["title"].placeholder = "ENTER A VALID TITLE HERE";
+      form["title"].style.cssText = "border: 2px solid red;";
+    }
+
+    if (!listData["to-do"]) {
+      form["to-do"].placeholder = "ENTER VALID CONTENT HERE";
+      form["to-do"].style.cssText = "border: 2px solid red;";
+    }
+
+    return { error: "Invalid content entry" };
   };
 
-  const toDoListValidation = (form) => {
-    const toDoListInput = Interface.getToDoListData(form);
-    if (!toDoListInput.project) {
-      console.log("no project");
-      return { error: "Invalid project entry" };
-    }
-    if (!toDoListInput.title) {
-      console.log("no title");
-      return { error: "Invalid title entry" };
-    }
-    if (!toDoListInput["to-do"]) {
-      console.log("no content");
-      return { error: "Invalid content entry" };
-    }
-    return toDoListInput;
-  };
-
-  const addToDoList = () => {
+  const addToDoList = (listData) => {
     const newForm = document.getElementById("new-form");
-    const validToDoListInput = toDoListValidation(newForm);
-    if (validToDoListInput.error) {
-      console.log("we need an error function");
-      return;
-    }
-    //display error
-
-    Data.add(validToDoListInput, getDate.formatted());
-    Interface.clearFormValues(newForm);
+    Data.add(listData, getDate.formatted());
     newForm.style.cssText = "display: none;";
   };
 
-  const updateToDoList = (formID) => {
-    const updatedForm = document.getElementById(formID);
-    const formIndex = getIndexFromID(formID);
-    const validToDoListInput = toDoListValidation(updatedForm);
-    if (validToDoListInput.error) {
-      console.log("we need an error function");
-      return;
-    }
-    //display error
-
-    Data.update(validToDoListInput, formIndex);
+  const updateToDoList = (form, listData) => {
+    const formIndex = getIndexFromID(form.id);
+    Data.update(listData, formIndex);
   };
 
   const removeToDoList = (formID) => {
@@ -97,12 +87,19 @@ const controller = () => {
     updatePegboard(true);
   };
 
-  const startFormListener = () => {
+  const startFormListeners = () => {
     toggleNewFormListener();
     const FORMS = document.querySelectorAll("form");
     FORMS.forEach((form) => {
       form["save"].addEventListener("click", () => {
-        form.id === "new-form" ? addToDoList() : updateToDoList(form.id);
+        const validatedListInput = validateToDoListInput(form);
+        if (validatedListInput.error) return; //can we stop this earlier?
+
+        if (form.id === "new-form") {
+          addToDoList(validatedListInput);
+        } else {
+          updateToDoList(form, validatedListInput);
+        }
         createProjectsSidebar(true);
         updatePegboard(true);
       });
@@ -113,18 +110,22 @@ const controller = () => {
     });
   };
 
+  const toggleListDisplay = (form) => {
+    if (form.style.cssText === "display: flex;") {
+      form.style.cssText = "display: none;";
+    } else {
+      form.style.cssText = "display: flex;";
+    }
+  };
+
   const toggleNewFormListener = () => {
-    TO_DO_DOM.appendChild(Interface.toDoList());
+    const newToDoListForm = Interface.toDoList();
+    TO_DO_DOM.appendChild(newToDoListForm);
     const NEW_FORM = document.getElementById("new-form");
     NEW_FORM.style.cssText = "display: none;";
     const TOGGLE_NEW_FORM = document.getElementById("toggle-new-form");
-    TOGGLE_NEW_FORM.addEventListener(
-      "click",
-      () =>
-        (NEW_FORM.style.cssText =
-          NEW_FORM.style.cssText === "display: flex;"
-            ? "display: none;"
-            : "display: flex;")
+    TOGGLE_NEW_FORM.addEventListener("click", () =>
+      toggleListDisplay(NEW_FORM)
     );
   };
 
@@ -137,7 +138,7 @@ const controller = () => {
   const updatePegboard = (removeChildContent) => {
     if (removeChildContent) Interface.removeChildContent(TO_DO_DOM);
     Interface.displayLists(Data.get(), TO_DO_DOM);
-    startFormListener();
+    startFormListeners();
   };
 
   createProjectsSidebar(false);
