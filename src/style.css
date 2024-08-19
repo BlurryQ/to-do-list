@@ -57,7 +57,29 @@ table {
 :root {
     --post-it-yellow: rgb(160, 160, 36);
     --sidebar-background-colour: rgb(49, 49, 49);
+    --error-red: rgb(185, 0, 0);
+    --error-red-opaque: rgba(168, 16, 16, 0.384);
 }
+
+/*move me*/
+[name="project"],
+[name="title"],
+[name="to-do"] {
+    border: 2px solid var(--post-it-yellow);
+}
+
+.error {
+    background: var(--error-red-opaque);
+    border: 2px solid var(--error-red);
+}
+
+.error::placeholder {
+    color: white;
+}
+
+
+
+/**/
 
 .sidebar {
     padding-top: 10%;
