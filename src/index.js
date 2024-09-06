@@ -52,33 +52,34 @@ const controller = () => {
     return allProjects;
   };
 
-  const displayValidationError = (form, input) => {
+  const newFormErrorController = (form, input) => {
     form[input].placeholder = `Please enter a valid ${input}`;
     form[input].classList.add("error");
     form[input].addEventListener("change", (change) => {
+      console.log(change.target.value);
       if (change.target.value === "") form[input].classList.add("error");
       if (change.target.value !== "") form[input].classList.remove("error");
     });
   };
 
+  //65 + 131 running newFormErrorController twice?
   const validateListInput = (form) => {
     const listData = Interface.getToDoListData(form);
     if (listData.project && listData.title && listData["to-do"])
       return listData;
-
-    if (!listData.project) displayValidationError(form, "project");
-    if (!listData.title) displayValidationError(form, "title");
-    if (!listData["to-do"]) displayValidationError(form, "to-do");
+    if (!listData.project) newFormErrorController(form, "project");
+    if (!listData.title) newFormErrorController(form, "title");
+    if (!listData["to-do"]) newFormErrorController(form, "to-do");
     return { error: "Invalid content entry" };
   };
 
-  const addToDoList = (listData) => {
+  const addList = (listData) => {
     const newForm = document.getElementById("new-form");
     Data.add(listData, getDate.formatted());
     newForm.style.cssText = "display: none;";
   };
 
-  const updateToDoList = (form, listData) => {
+  const updateList = (form, listData) => {
     const formIndex = getIndexFromID(form.id);
     Data.update(listData, formIndex);
   };
@@ -88,15 +89,15 @@ const controller = () => {
     if (validatedListInput.error) return;
 
     if (form.id === "new-form") {
-      addToDoList(validatedListInput);
+      addList(validatedListInput);
     } else {
-      updateToDoList(form, validatedListInput);
+      updateList(form, validatedListInput);
     }
     createProjectsSidebar(true);
     updatePegboard(true);
   };
 
-  const removeToDoList = (formID) => {
+  const removeList = (formID) => {
     const index = getIndexFromID(formID);
     Data.remove(index);
     updatePegboard(true);
@@ -110,7 +111,7 @@ const controller = () => {
         validateAndCreateToDoList(form)
       );
       form["remove"].addEventListener("click", () => {
-        removeToDoList(form.id);
+        removeList(form.id);
         createProjectsSidebar(true);
       });
     });
@@ -125,31 +126,13 @@ const controller = () => {
   };
 
   const toggleNewFormListener = () => {
-    const newToDoListForm = Interface.toDoList();
-    TO_DO_DOM.appendChild(newToDoListForm);
+    const newListForm = Interface.toDoList();
+    TO_DO_DOM.appendChild(newListForm);
+    //65 + 131 running newFormErrorController twice?
     const NEW_FORM = document.getElementById("new-form");
-    NEW_FORM["project"].addEventListener("change", (change) => {
-      //can be => displayValidationError (remove blow 4 lines)
-      if (change.target.value === "")
-        NEW_FORM["project"].classList.add("error");
-      if (change.target.value !== "")
-        NEW_FORM["project"].classList.remove("error");
-      displayValidationError(NEW_FORM, "project");
-    });
-    NEW_FORM["title"].addEventListener("change", (change) => {
-      //can be => displayValidationError (remove blow 4 lines)
-      if (change.target.value === "") NEW_FORM["title"].classList.add("error");
-      if (change.target.value !== "")
-        NEW_FORM["title"].classList.remove("error");
-      displayValidationError(NEW_FORM, "title");
-    });
-    NEW_FORM["to-do"].addEventListener("change", (change) => {
-      //can be => displayValidationError (remove blow 4 lines)
-      if (change.target.value === "") NEW_FORM["to-do"].classList.add("error");
-      if (change.target.value !== "")
-        NEW_FORM["to-do"].classList.remove("error");
-      displayValidationError(NEW_FORM, "to-do");
-    });
+    newFormErrorController(NEW_FORM, "project");
+    newFormErrorController(NEW_FORM, "title");
+    newFormErrorController(NEW_FORM, "to-do");
     NEW_FORM.style.display = "none";
     const TOGGLE_NEW_FORM = document.getElementById("toggle-new-form");
     TOGGLE_NEW_FORM.addEventListener("click", () =>
