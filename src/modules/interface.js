@@ -11,6 +11,7 @@ export default function Interface() {
 
   const toDoList = (toDoList, listIndex) => {
     const form = document.createElement("form");
+    const pin = document.createElement("div");
     const projectLabel = document.createElement("label");
     const titleLabel = document.createElement("label");
     const toDoLabel = document.createElement("label");
@@ -29,26 +30,22 @@ export default function Interface() {
     projectLabel.for = "project";
     projectLabel.textContent = "Project Name:";
     projectInput.type = "text";
-    projectInput.name = "project";
     projectInput.placeholder = "Enter project name";
 
     titleLabel.for = "title";
     titleLabel.textContent = "Title:";
     titleInput.type = "text";
-    titleInput.name = "title";
     titleInput.placeholder = "Enter title";
 
     toDoLabel.for = "to-do";
     toDoLabel.textContent = "To Do:";
     toDoInput.rows = "4";
     toDoInput.columns = "50";
-    toDoInput.name = "to-do";
     toDoInput.placeholder = "Enter note here";
 
-    dueDateLabel.for = "dueDate";
+    dueDateLabel.for = "due-date";
     dueDateLabel.textContent = "Date due:";
     dueDateInput.type = "date";
-    dueDateInput.name = "dueDate";
     dueDateInput.placeholder = "Enter due date";
 
     save.textContent = "Save";
@@ -58,6 +55,7 @@ export default function Interface() {
     remove.type = "button";
 
     form.setAttribute("id", "new-form");
+    pin.setAttribute("class", "pin");
     projectInput.setAttribute("name", "project");
     titleInput.setAttribute("name", "title");
     toDoInput.setAttribute("name", "to-do");
@@ -65,6 +63,7 @@ export default function Interface() {
     save.setAttribute("name", "save");
     remove.setAttribute("name", "remove");
 
+    form.appendChild(pin);
     form.appendChild(projectLabel);
     form.appendChild(projectInput);
     form.appendChild(projectBR);
@@ -90,15 +89,20 @@ export default function Interface() {
 
       createdDateLabel.textContent = "Created Date:";
       createdDateLabel.for = "created-date";
-      createdDateSpan.textContent = toDoList.created;
-
-      createdDateSpan.classList.add("createdDate");
+      createdDateSpan.textContent = toDoList["created-date"];
+      createdDateSpan.setAttribute("class", "created-date");
+      createdDateSpan.setAttribute("name", "created-date");
 
       form.setAttribute("id", "index-" + listIndex);
 
       form.appendChild(createdDateLabel);
       form.appendChild(createdDateSpan);
       form.appendChild(createdDateBR);
+    } else {
+      const p1 = document.createElement("p");
+      const p2 = document.createElement("p");
+      form.appendChild(p1);
+      form.appendChild(p2);
     }
 
     form.appendChild(save);

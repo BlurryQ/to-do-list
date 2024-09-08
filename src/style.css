@@ -50,8 +50,10 @@ table {
 /* MEYERS RESET ABOVE */
 
 html {
-    background: url(./images/corkboard.jpg);
+    background: url(./images/corkboard.webp);
+    background-size: cover;
     color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 :root {
@@ -72,10 +74,10 @@ html {
 
 .header {
     position: fixed;
-    right: 1rem;
-    top: 1rem;
+    right: 0;
+    top: 0;
     padding: 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0px 0px 0px 0.5rem;
     background-color: black;
 }
 
@@ -126,6 +128,9 @@ label {
 
 [name="save"] {
     margin-bottom: 2rem;
+    background: green;
+    color: white;
+    font-weight: bold;
 }
 
 [name="remove"] {
@@ -150,8 +155,8 @@ label {
 
 .sidebar {
     grid-row: span 2;
-    background-color: var(--sidebar-background-colour)
-;    height: 100vh;
+    background-color: var(--sidebar-background-colour);
+    height: 100vh;
 }
 
 form {
@@ -162,10 +167,15 @@ form {
     background-color: var(--post-it-yellow); 
     padding: 1rem;
     box-shadow: -2px 4px 5px black;
-    
+    border: 1px solid black;
+}
+
+form p {
+    height: 2rem;
 }
 
 form textarea {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     background-color: inherit;
     color: black;
 }
@@ -193,4 +203,10 @@ form button {
     grid-template-columns: repeat(auto-fit, minmax(5vw, 350px));
     gap: 4%;
     justify-content: space-evenly;
+}
+
+.pin {
+    background: url("./images/pin.png") no-repeat;
+    padding: 25px;
+    align-self: center;
 }

@@ -11,6 +11,8 @@ const controller = () => {
   const TO_DO_DOM = document.getElementById("to-do");
   const CURRENT_PROJECTS_DOM = document.getElementById("current-projects");
   const ALL_PROJECTS_BUTTON = document.getElementById("all-projects");
+  let currentData,
+    sort = "";
 
   ALL_PROJECTS_BUTTON.addEventListener("click", () => {
     updatePegboard(true);
@@ -18,7 +20,8 @@ const controller = () => {
 
   const updatePegboard = (removeChildContent) => {
     if (removeChildContent) Interface.removeChildContent(TO_DO_DOM);
-    Interface.displayLists(Data.get(), TO_DO_DOM);
+    currentData = Data.get();
+    Interface.displayLists(currentData, TO_DO_DOM);
     startFormListeners();
   };
 
@@ -32,7 +35,8 @@ const controller = () => {
         Interface.removeChildContent(TO_DO_DOM);
         const projectName = project.textContent;
         const thisProjectsLists = getProjectLists(projectName);
-        Interface.displayLists(thisProjectsLists, TO_DO_DOM);
+        currentData = thisProjectsLists;
+        Interface.displayLists(currentData, TO_DO_DOM);
       });
     });
   };
@@ -102,8 +106,46 @@ const controller = () => {
     updatePegboard(true);
   };
 
+  const sortData = (sortBy, data) => {
+    console.log("here");
+    const [sort, order] = sortBy.split("_");
+    if (order === "asc") {
+      const sortedData = data.sort((a, b) => {
+        console.log("A:", a[sort]);
+        console.log("B:", b[sort]);
+        console.log(a[sort] > b[sort]);
+        return a[sort] > b[sort];
+      });
+      console.log(sortedData);
+      return sortedData;
+    }
+    if (order === "desc") {
+      const sortedData = data.sort((a, b) => {
+        console.log("here?");
+        console.log("A:", a[sort]);
+        console.log("B:", b[sort]);
+        console.log(a[sort] > b[sort]);
+        return b[sort] > a[sort];
+      });
+      console.log(sortedData);
+      return sortedData;
+    }
+  };
+
+  const startSortListener = () => {
+    const sortBy = document.getElementById("sort");
+    sortBy.addEventListener("change", (event) => {
+      sort = event.target.value;
+      const sortedData = sortData(sort, currentData);
+      Interface.removeChildContent(TO_DO_DOM);
+      Interface.displayLists(sortedData, TO_DO_DOM);
+      currentData = sortedData;
+    });
+  };
+
   const startFormListeners = () => {
     toggleNewForm();
+    startSortListener();
     const FORMS = document.querySelectorAll("form");
     FORMS.forEach((form) => {
       form["save"].addEventListener("click", () =>
