@@ -6,12 +6,19 @@
     <title>Woof | To Do List</title>
 </head>
 <body>
+    <div class="header">
+        <label for="sort">Sort by:</label>
+        <select name="sort" id="sort">
+            <option value="age-desc">age descending (oldest first)</option>
+          <option value="age-asc">age ascending (youngest first)</option>
+        </select>
+    </div>
     <div class="pegboard">
         <div class="sidebar"><button><span id="all-projects">All Projects</span></button>
             <div id="current-projects"></div>
+            <button id="toggle-new-form">Toggle New List</button>
         </div>
         <div id="to-do">
-            <!-- <button id="toggle-new-form">+</button> -->
         </div>
     </div>
 </body>

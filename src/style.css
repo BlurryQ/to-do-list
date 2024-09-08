@@ -49,8 +49,8 @@ table {
 
 /* MEYERS RESET ABOVE */
 
-* {
-    background: black;
+html {
+    background: url(./images/corkboard.jpg);
     color: white;
 }
 
@@ -59,13 +59,6 @@ table {
     --sidebar-background-colour: rgb(49, 49, 49);
     --error-red: rgb(185, 0, 0);
     --error-red-opaque: rgba(168, 16, 16, 0.384);
-}
-
-/*move me*/
-[name="project"],
-[name="title"],
-[name="to-do"] {
-    border: 2px solid var(--post-it-yellow);
 }
 
 .error {
@@ -77,9 +70,14 @@ table {
     color: white;
 }
 
-
-
-/**/
+.header {
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: black;
+}
 
 .sidebar {
     padding-top: 10%;
@@ -89,6 +87,7 @@ table {
 }
 
 .sidebar button {
+    color: white;
     font-size: 2rem;
     background: var(--sidebar-background-colour);
     text-align: center;
@@ -105,6 +104,26 @@ table {
     align-items: center;   
 }
 
+label {
+    margin-top: 1rem;
+}
+
+[name="project"],
+[name="title"],
+[name="to-do"] {
+    border: 2px solid var(--post-it-yellow);
+    border-bottom: 1px solid black;
+    text-indent: 0.5rem;
+}
+
+[name="to-do"] {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    text-indent: 0rem;
+    border-radius: 1rem;  
+    padding: 0.5rem;
+}
+
 [name="save"] {
     margin-bottom: 2rem;
 }
@@ -118,11 +137,14 @@ table {
 #toggle-new-form {
     justify-self: center;
     align-self: center;
+    border: 1px dashed black;
+    border-radius: 0.5rem;
+    background-color: green;
 }
 
 .pegboard {
     display: grid;
-    grid-template-columns: 17% 77%;
+    grid-template-columns: minmax(150px,17%) 77%;
     
 }
 
@@ -137,10 +159,15 @@ form {
     justify-content: center;
     flex-direction: column;
     border: 1px solid var(--post-it-yellow);
-    background-color: var(--post-it-yellow);
-    border-radius: 1rem;  
-    padding: 0.5rem;
+    background-color: var(--post-it-yellow); 
+    padding: 1rem;
+    box-shadow: -2px 4px 5px black;
     
+}
+
+form textarea {
+    background-color: inherit;
+    color: black;
 }
 
 form input,
@@ -163,6 +190,7 @@ form button {
     min-height: 30vh;
     margin-left: 2%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(5vw, 350px));
     gap: 4%;
+    justify-content: space-evenly;
 }

@@ -17,7 +17,7 @@ export default function Interface() {
     const dueDateLabel = document.createElement("label");
     const projectInput = document.createElement("input");
     const titleInput = document.createElement("input");
-    const toDoInput = document.createElement("input");
+    const toDoInput = document.createElement("textarea");
     const dueDateInput = document.createElement("input");
     const projectBR = document.createElement("br");
     const titleBR = document.createElement("br");
@@ -40,7 +40,8 @@ export default function Interface() {
 
     toDoLabel.for = "to-do";
     toDoLabel.textContent = "To Do:";
-    toDoInput.type = "text";
+    toDoInput.rows = "4";
+    toDoInput.columns = "50";
     toDoInput.name = "to-do";
     toDoInput.placeholder = "Enter note here";
 
@@ -106,13 +107,6 @@ export default function Interface() {
     return form;
   };
 
-  const _addListToggle = () => {
-    const toggle = document.createElement("button");
-    toggle.setAttribute("id", "toggle-new-form");
-    toggle.textContent = "+";
-    return toggle;
-  };
-
   const getToDoListData = (HTMLForm) => {
     return {
       project: HTMLForm["project"].value,
@@ -131,15 +125,12 @@ export default function Interface() {
   };
 
   const displayLists = (toDoLists, location) => {
-    if (toDoLists) {
-      let listIndex = 0;
-      for (const _list of toDoLists) {
-        const list = toDoList(_list, listIndex);
-        location.appendChild(list);
-        listIndex += 1;
-      }
+    let listIndex = 0;
+    for (const _list of toDoLists) {
+      const list = toDoList(_list, listIndex);
+      location.appendChild(list);
+      listIndex += 1;
     }
-    location.appendChild(_addListToggle());
   };
 
   return {

@@ -52,24 +52,23 @@ const controller = () => {
     return allProjects;
   };
 
-  const newFormErrorController = (form, input) => {
+  const newFormListener = (form, input) => {
     form[input].placeholder = `Please enter a valid ${input}`;
     form[input].classList.add("error");
     form[input].addEventListener("change", (change) => {
-      console.log(change.target.value);
       if (change.target.value === "") form[input].classList.add("error");
       if (change.target.value !== "") form[input].classList.remove("error");
     });
   };
 
-  //65 + 131 running newFormErrorController twice?
   const validateListInput = (form) => {
     const listData = Interface.getToDoListData(form);
     if (listData.project && listData.title && listData["to-do"])
       return listData;
-    if (!listData.project) newFormErrorController(form, "project");
-    if (!listData.title) newFormErrorController(form, "title");
-    if (!listData["to-do"]) newFormErrorController(form, "to-do");
+
+    if (!listData.project) newFormListener(form, "project");
+    if (!listData.title) newFormListener(form, "title");
+    if (!listData["to-do"]) newFormListener(form, "to-do");
     return { error: "Invalid content entry" };
   };
 
@@ -104,7 +103,7 @@ const controller = () => {
   };
 
   const startFormListeners = () => {
-    toggleNewFormListener();
+    toggleNewForm();
     const FORMS = document.querySelectorAll("form");
     FORMS.forEach((form) => {
       form["save"].addEventListener("click", () =>
@@ -125,14 +124,10 @@ const controller = () => {
     }
   };
 
-  const toggleNewFormListener = () => {
+  const toggleNewForm = () => {
     const newListForm = Interface.toDoList();
     TO_DO_DOM.appendChild(newListForm);
-    //65 + 131 running newFormErrorController twice?
     const NEW_FORM = document.getElementById("new-form");
-    newFormErrorController(NEW_FORM, "project");
-    newFormErrorController(NEW_FORM, "title");
-    newFormErrorController(NEW_FORM, "to-do");
     NEW_FORM.style.display = "none";
     const TOGGLE_NEW_FORM = document.getElementById("toggle-new-form");
     TOGGLE_NEW_FORM.addEventListener("click", () =>
