@@ -1,4 +1,4 @@
-export default function getDate() {
+export default function formatDate(date) {
   const formatted = () => {
     const date = new Date();
     const day = _format(date.getDate());
@@ -11,5 +11,5 @@ export default function getDate() {
     return num.toString();
   };
 
-  return { formatted };
+  return formatted(date);
 }

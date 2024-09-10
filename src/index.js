@@ -1,13 +1,12 @@
 import style from "./style.css";
 import DATA from "./modules/data.js";
 import INTERFACE from "./modules/interface.js";
-import GET_DATE from "./modules/get-date.js";
 
 /* ---------- ---------- ---------- ---------- ---------- */
 const controller = () => {
   const Interface = INTERFACE();
   const Data = DATA();
-  const getDate = GET_DATE();
+
   const TO_DO_DOM = document.getElementById("to-do");
   const CURRENT_PROJECTS_DOM = document.getElementById("current-projects");
   const ALL_PROJECTS_BUTTON = document.getElementById("all-projects");
@@ -78,7 +77,7 @@ const controller = () => {
 
   const addList = (listData) => {
     const newForm = document.getElementById("new-form");
-    Data.add(listData, getDate.formatted());
+    Data.add(listData);
     newForm.style.cssText = "display: none;";
   };
 
@@ -106,28 +105,39 @@ const controller = () => {
     updatePegboard(true);
   };
 
+  /* tidy up ifs */
   const sortData = (sortBy, data) => {
-    console.log("here");
     const [sort, order] = sortBy.split("_");
+    if (sort === "title" && order === "asc") {
+      const sortedData = data.sort((a, b) => {
+        const titleA = a.title;
+        const titleB = b.title;
+        return titleA > titleB ? 1 : -1;
+      });
+      return sortedData;
+    }
+    if (sort === "title" && order === "desc") {
+      const sortedData = data.sort((a, b) => {
+        const titleA = a.title;
+        const titleB = b.title;
+        return titleB > titleA ? 1 : -1;
+      });
+      return sortedData;
+    }
     if (order === "asc") {
       const sortedData = data.sort((a, b) => {
-        console.log("A:", a[sort]);
-        console.log("B:", b[sort]);
-        console.log(a[sort] > b[sort]);
-        return a[sort] > b[sort];
+        const dateA = new Date(a[sort]).getTime();
+        const dateB = new Date(b[sort]).getTime();
+        return dateA - dateB;
       });
-      console.log(sortedData);
       return sortedData;
     }
     if (order === "desc") {
       const sortedData = data.sort((a, b) => {
-        console.log("here?");
-        console.log("A:", a[sort]);
-        console.log("B:", b[sort]);
-        console.log(a[sort] > b[sort]);
-        return b[sort] > a[sort];
+        const dateA = new Date(a[sort]).getTime();
+        const dateB = new Date(b[sort]).getTime();
+        return dateB - dateA;
       });
-      console.log(sortedData);
       return sortedData;
     }
   };
@@ -137,6 +147,8 @@ const controller = () => {
     sortBy.addEventListener("change", (event) => {
       sort = event.target.value;
       const sortedData = sortData(sort, currentData);
+      console.log("--- Data returned --- ");
+      console.log(sortedData);
       Interface.removeChildContent(TO_DO_DOM);
       Interface.displayLists(sortedData, TO_DO_DOM);
       currentData = sortedData;

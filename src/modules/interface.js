@@ -1,3 +1,5 @@
+import formatDate from "../modules/get-date";
+
 export default function Interface() {
   const displayProjects = (projects, CURRENT_PROJECTS) => {
     for (const project of projects) {
@@ -89,7 +91,14 @@ export default function Interface() {
 
       createdDateLabel.textContent = "Created Date:";
       createdDateLabel.for = "created-date";
-      createdDateSpan.textContent = toDoList["created-date"];
+
+      const _format = (num) => {
+        if (num < 10) return "0" + num;
+        return num.toString();
+      };
+
+      const date = toDoList["created-date"];
+      createdDateSpan.textContent = formatDate(date);
       createdDateSpan.setAttribute("class", "created-date");
       createdDateSpan.setAttribute("name", "created-date");
 

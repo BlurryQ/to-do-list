@@ -4,9 +4,10 @@ export default function Data() {
     return toDoLists ? toDoLists : [];
   };
 
-  const add = (list, date) => {
+  const add = (list) => {
     const toDoLists = get();
-    list["created-date"] = date;
+    list.id = Date.now();
+    list["created-date"] = new Date();
     toDoLists.push(list);
     localStorage.setItem("toDoLists", JSON.stringify(toDoLists));
   };
