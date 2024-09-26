@@ -203,12 +203,20 @@ controller();
 
 /* 
 
-error function
+add header explaining what this site is for
 
-top bar for sort and light/dark mode
+add "set as complete"
 
-  sort by due date, created date or reverse creation date
+add priority (posit it colour change?)
 
-checklist or string
+check you can edit from within projects
+
+create hamburger for projects [projectName] - selector (framework?)
+
+shrink list card (double columns for dates and save/delete)
+
+filters not working properly
+
+
 
 */
