@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Woof | To Do List</title>
+<script defer src="bundle.js"></script></head>
+<body>
+    <div class="filter">
+        <label for="sort">Sort by:</label>
+        <select name="sort" id="sort">
+            <option value="created-date_desc">Age descending (most recent first)</option>
+            <option value="created-date_asc">Age ascending (oldest first)</option>
+            <option value="due-date_desc">Due date descending (latest first)</option>
+            <option value="due-date_asc">Due date ascending (earliest first)</option>
+            <option value="title_asc">Title ascending (A - Z)</option>
+            <option value="title_desc">Title descending (Z - A)</option>
+        </select>
+    </div>
+    <div class="pegboard">
+        <header>
+            <h1>Blurry Q's To Do's</h1>
+        </header>
+        <div class="sidebar"><button><span id="all-projects">All Projects</span></button>
+            <div id="current-projects"></div>
+            <button id="toggle-new-form">Create New List</button>
+        </div>
+        <div id="to-do">
+        </div>
+    </div>
+</body>
+</html>
