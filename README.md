@@ -1,8 +1,10 @@
 # To-Do List
 
+![To Do List Screenshot](./src/images/demo.png)
+
 ## Summary
 
-![To Do List Screenshot](./src/images/demo.png)
+**Hosted:** [To Do Lists](https://blurryq.github.io/to-do-list/)
 
 I have created a way of tracking all your to-do's. You can press the "Create New List" button to start creating a new to-do list. You are required to fill in the Project Name, Title, and To Do section, and if these are blank, you will see relevant error messages. Once saved, you can see your new list and are able to filter these by project (from the sidebar) or by sorting (from the header). This allows for the CRUD methods (Create, Read, Update & Delete).
 
